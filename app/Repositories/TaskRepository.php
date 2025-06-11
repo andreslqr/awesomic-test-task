@@ -57,6 +57,6 @@ class TaskRepository
      */
     public function update(Task $task, array $data): bool
     {
-        return $task->update($data);
+        return $task->update(array_filter($data));
     }
 }

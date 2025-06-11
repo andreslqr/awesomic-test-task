@@ -40,6 +40,12 @@ test('show task', function (): void {
             ->assertJson($task->only('id', 'title', 'description'));
 });
 
+test('show unexisting task', function (): void {
+    $response = $this->getJson("api/tasks/99999999");
+
+    $response->assertStatus(404);
+});
+
 test('create task', function () {
     $data = Task::factory()->make();
 
@@ -90,7 +96,7 @@ test('update task', function (): void {
     ]);
 });
 
-test('update invalid task', function (): void {
+test('update partial task', function (): void {
     $task = Task::factory()->create();
 
     $response = $this->putJson("/api/tasks/{$task->getKey()}", [
@@ -99,9 +105,13 @@ test('update invalid task', function (): void {
         'status' => TaskStatus::Done->value,
     ]);
 
-    $response->assertStatus(422);
+    $response->assertStatus(204);
 
-    $this->assertDatabaseHas('tasks', $task->except('created_at', 'updated_at'));
+    $this->assertDatabaseHas('tasks', [
+        ...$task->except('created_at', 'updated_at'),
+        'description' => 'Updated Task Description',
+        'status' => TaskStatus::Done->value,
+    ]);
 });
 
 test('delete task', function (): void {

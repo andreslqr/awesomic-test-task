@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\TaskStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\TaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\JsonResponse;
@@ -47,7 +49,7 @@ class TaskController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(TaskRequest $request): JsonResponse
+    public function store(StoreTaskRequest $request): JsonResponse
     {
         $task = $this->taskRepository->create($request->validated());
 
@@ -79,7 +81,7 @@ class TaskController extends Controller
      * @param \App\Models\Task $task
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(TaskRequest $request, Task $task): JsonResponse
+    public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         $this->taskRepository->update($task, $request->validated());
 
