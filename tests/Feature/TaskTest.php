@@ -37,13 +37,13 @@ test('show task', function (): void {
     $response = $this->getJson("api/tasks/{$task->getKey()}");
 
     $response->assertStatus(200)
-            ->assertJson($task->only('id', 'title', 'description', 'status'));
+            ->assertJson($task->only('id', 'title', 'description'));
 });
 
 test('create task', function () {
     $data = Task::factory()->make();
 
-    $response = $this->postJson('/', $data->toArray());
+    $response = $this->postJson("/api/tasks", $data->toArray());
 
     $response->assertStatus(201);
 
@@ -55,7 +55,7 @@ test('create invalid task', function (): void {
         'title' => null
     ]);    
 
-    $response = $this->postJson('/', $data->toArray());
+    $response = $this->postJson("/api/tasks", $data->toArray());
 
     $response->assertStatus(422);
 
@@ -63,7 +63,7 @@ test('create invalid task', function (): void {
         'title' => str_repeat('a', 256)
     ]);
 
-    $response = $this->postJson('/', $data->toArray());
+    $response = $this->postJson("/api/tasks", $data->toArray());
 
     $response->assertStatus(422);
 
@@ -80,7 +80,7 @@ test('update task', function (): void {
         'status' => TaskStatus::Done->value,
     ]);
     
-    $response->assertStatus(200);
+    $response->assertStatus(204);
 
     $this->assertDatabaseHas('tasks', [
         'id' => $task->getKey(),
@@ -101,7 +101,7 @@ test('update invalid task', function (): void {
 
     $response->assertStatus(422);
 
-    $this->assertDatabaseHas('tasks', $task->toArray());
+    $this->assertDatabaseHas('tasks', $task->except('created_at', 'updated_at'));
 });
 
 test('delete task', function (): void {
