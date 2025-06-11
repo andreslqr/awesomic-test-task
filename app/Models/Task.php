@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @param int $id
- * @param string $title
- * @param string $description
- * @param \App\Enums\TaskStatus $status
- * @param Illuminate\Support\Carbon $created_at
- * @param Illuminate\Support\Carbon $updated_at
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property \App\Enums\TaskStatus $status
+ * @property Illuminate\Support\Carbon $created_at
+ * @property Illuminate\Support\Carbon $updated_at
  */
 class Task extends Model
 {

@@ -14,7 +14,7 @@ test('list tasks', function (): void {
     $response = $this->getJson("api/tasks");
 
     $response->assertStatus(200)
-            ->assertJsonCount($tasks->count());
+            ->assertJsonCount($tasks->count(), 'data');
 });
 
 test('filter tasks by status', function (): void {
@@ -27,7 +27,7 @@ test('filter tasks by status', function (): void {
     $response = $this->getJson("/api/tasks?status={$status->value}");
 
     $response->assertStatus(200)
-            ->assertJsonCount($filteredTasks->count());
+            ->assertJsonCount($filteredTasks->count(), 'data');
 });
 
 
