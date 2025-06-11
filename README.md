@@ -113,7 +113,7 @@ Remember replace the domain for the correct one that you use in your local envir
 > | --- | --- | --- |
 > | `200` | `application/json` | `{"title": "", "description": "", "status": ""}` |
 > | `404` | `application/json` | `{"message": ""}` |
-}` |
+
 
 ##### Example cURL
 
